@@ -23,6 +23,18 @@ describe Log4r::RemoteSyslogOutputter do
 
       subject.new(name, host, port, :level => nil, :formatter => nil, :key => 'value')
     end
+
+    it 'should not modify the input options hash' do
+      options = {:level => nil, :formatter => nil}
+      orig_options = options.dup
+
+      RemoteSyslogLogger::UdpSender.
+        should_receive(:new)
+
+      subject.new(name, host, port, options)
+
+      options.should == orig_options
+    end
   end
 
   describe '#write' do

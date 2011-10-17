@@ -4,12 +4,14 @@ require 'remote_syslog_logger/udp_sender'
 module Log4r
   class RemoteSyslogOutputter < Log4r::Outputter
     def initialize(name, host, port, options = {})
-      level = options.delete(:level)
-      formatter = options.delete(:formatter)
+      options.dup.tap do |o|
+        level = o.delete(:level)
+        formatter = o.delete(:formatter)
 
-      super(name, {:level => level, :formatter => formatter})
+        super(name, {:level => level, :formatter => formatter})
 
-      @udp_sender = RemoteSyslogLogger::UdpSender.new(host, port, options)
+        @udp_sender = RemoteSyslogLogger::UdpSender.new(host, port, o)
+      end
     end
 
     private
