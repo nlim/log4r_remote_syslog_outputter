@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.add_dependency('log4r', '>= 1.1.9')
   s.add_dependency('remote_syslog_logger', '>= 1.0.3')
 
-  s.add_dependency('rspec', '>= 2.7.0')
+  s.add_development_dependency('rspec', '>= 2.7.0')
 
   s.rubyforge_project = "log4r_remote_syslog_outputter"
 
