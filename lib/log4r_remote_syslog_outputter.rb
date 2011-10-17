@@ -1,0 +1,3 @@
+require "log4r_remote_syslog_outputter/version"
+require "log4r_remote_syslog_outputter/log4r/outputter/remote_syslog_outputter"
+
