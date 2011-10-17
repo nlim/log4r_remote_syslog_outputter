@@ -1,22 +1,42 @@
 require 'spec_helper'
 
 describe Log4r::RemoteSyslogOutputter do
+  describe '#initialize' do
+    let(:name) { 'name' }
+    let(:host) { 'host' }
+    let(:port) { 65535 }
+
+    subject { Log4r::RemoteSyslogOutputter }
+
+    it 'should create a new RemoteSyslogLogger::UdpSender' do
+      RemoteSyslogLogger::UdpSender.
+        should_receive(:new).
+        with(host, port, {})
+
+      subject.new(name, host, port)
+    end
+
+    it "should not pass along :level and :formatter to RemoteSyslogLogger::UdpSender's constructor" do
+      RemoteSyslogLogger::UdpSender.
+        should_receive(:new).
+        with(host, port, :key => 'value')
+
+      subject.new(name, host, port, :level => nil, :formatter => nil, :key => 'value')
+    end
+  end
+
   describe '#write' do
-    describe 'unit' do
-      let(:udp_sender) { stub }
-      let(:data) { stub }
+    let(:udp_sender) { stub }
+    let(:data) { stub }
 
-      subject { Log4r::RemoteSyslogOutputter.new }
+    subject { Log4r::RemoteSyslogOutputter.new('', nil, nil) }
 
-      it 'should delegate to udp_sender#write' do
-        RemoteSyslogLogger::UdpSender.
-          should_receive(:new).
-          and_return(udp_sender)
+    it 'should delegate to udp_sender#write' do
+      RemoteSyslogLogger::UdpSender.stub!(:new).and_return(udp_sender)
 
-        udp_sender.should_receive(:write).with(data)
+      udp_sender.should_receive(:write).with(data)
 
-        subject.send(:write, data)
-      end
+      subject.send(:write, data)
     end
   end
 end
