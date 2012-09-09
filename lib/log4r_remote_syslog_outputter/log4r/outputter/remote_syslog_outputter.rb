@@ -5,7 +5,9 @@ require 'uri'
 module Log4r
   class RemoteSyslogOutputter < Log4r::Outputter
     def initialize(name, options = {})
-      uri = URI.parse(options['url'])
+      url =   options['url']
+      url ||= options[:url]
+      uri = URI.parse(url)
       options.dup.tap do |o|
         super(name, [:level, :formatter, 'url'].inject({}) { |h, i| 
           h.tap { |a| 

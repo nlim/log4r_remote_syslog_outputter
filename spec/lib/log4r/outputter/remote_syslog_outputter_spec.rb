@@ -64,10 +64,38 @@ describe Log4r::RemoteSyslogOutputter do
     end
   end
 
-  describe 'Creating via a configuration file' do
-    it 'should work with a YAML config file'
+  context 'when creating via a configuration file' do
 
-    it 'should work with an XML config file'
+    let(:logger_name)   { "my_awesome_logger" }
+    let(:outputter_name) { "remote_syslog_outputter" }
+    let(:hash_from_yaml) do
+      { 
+        "loggers"=> [
+          {"name"=> logger_name, "level"=>"ALL", "trace" => true, "additive"=>false, "outputters"=>[outputter_name]}
+        ],        
+        "outputters" =>  [
+          {"type" => "RemoteSyslogOutputter", "name" => outputter_name, "level" => "ALL", 
+           "url"  => "http://localhost:3203", "program" =>"Test",
+           "formatter" => {"pattern"=>"%C %l: %m", "type"=>"PatternFormatter" } 
+          }
+        ]
+      }
+  
+    end
+
+    it 'should work create an outputter from a YAML config file' do
+      Log4r::YamlConfigurator.decode_yaml(hash_from_yaml)
+    end
+
+    it 'should work with an XML config file' do
+      Log4r::Configurator.load_xml_file('spec/config_files/config.xml')
+    end
+
+    after(:each) do
+      outputter = Log4r::Outputter[outputter_name]
+      outputter.name.should eql(outputter_name)
+      Log4r::Logger[logger_name].outputters.should eql([outputter])
+    end
 
   end
 end

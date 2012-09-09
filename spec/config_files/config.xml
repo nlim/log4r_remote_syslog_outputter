@@ -1,0 +1,15 @@
+<log4r_config>
+ 
+    <!-- Outputters -->
+    <outputter name="remote_syslog_outputter" type="RemoteSyslogOutputter" level="ALL" url="http://localhost:3203">
+        <formatter type="Log4r::PatternFormatter">
+            <pattern>=>[%5l %d] %C: %M [%t]</pattern>
+        </formatter>
+    </outputter>
+  
+    <!-- Loggers -->
+    <logger name="my_awesome_logger" level="ALL" additive="false" trace="true">
+        <outputter>remote_syslog_outputter</outputter>
+    </logger>
+  
+</log4r_config>
