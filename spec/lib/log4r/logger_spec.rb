@@ -6,7 +6,7 @@ describe Log4r::Logger do
     let(:uri)  { URI.parse(url) }
     let(:host) { uri.host }
     let(:port) { uri.port }
-    let(:outputter) { Log4r::RemoteSyslogOutputter.new('outputter', 'url' => url) }
+    let(:outputter) { Log4r::RemoteSyslogOutputter.new('outputter', :url => url) }
  
     let(:socket) { UDPSocket.new }
 

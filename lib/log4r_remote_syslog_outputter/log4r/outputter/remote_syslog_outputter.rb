@@ -4,12 +4,17 @@ require 'uri'
 
 module Log4r
   class RemoteSyslogOutputter < Log4r::Outputter
+    # The url is required here but it has to be specified
+    # as an option (not a parameter) because that's the only
+    # way it can be created from a configuration file.
+    #   :url  is given when an XML configuration file is used
+    #   'url' is given when a YAML configuration file is used
     def initialize(name, options = {})
       url =   options['url']
       url ||= options[:url]
       uri = URI.parse(url)
       options.dup.tap do |o|
-        super(name, [:level, :formatter, 'url'].inject({}) { |h, i| 
+        super(name, [:level, :formatter, :url, 'url'].inject({}) { |h, i| 
           h.tap { |a| 
             a[i] = o.delete(i) 
           } 

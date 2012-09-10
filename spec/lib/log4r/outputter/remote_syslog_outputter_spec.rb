@@ -17,7 +17,7 @@ describe Log4r::RemoteSyslogOutputter do
         .should_receive(:new)
         .with(host, port, {})
 
-      subject.new(name, 'url' => url)
+      subject.new(name, :url => url)
     end
 
     it "should not pass along :level and :formatter, and 'url' to RemoteSyslogLogger::UdpSender's constructor" do
@@ -25,7 +25,7 @@ describe Log4r::RemoteSyslogOutputter do
         .should_receive(:new)
         .with(host, port, :key => 'value')
 
-      subject.new(name, 'url' => url, :level => nil, :formatter => nil, :key => 'value')
+      subject.new(name, :url => url, :level => nil, :formatter => nil, :key => 'value')
     end
 
     it "should symbolize the extra keys" do
@@ -33,12 +33,12 @@ describe Log4r::RemoteSyslogOutputter do
         .should_receive(:new)
         .with(host, port, :program => 'value')
 
-      subject.new(name, 'url' => url, :level => nil, :formatter => nil, 'program' => 'value')
+      subject.new(name, :url => url, :level => nil, :formatter => nil, 'program' => 'value')
 
     end
 
     it 'should not modify the input options hash, using a duplicate' do
-      options = {'url' => url, :level => nil, :formatter => nil}
+      options = {:url => url, :level => nil, :formatter => nil}
       orig_options = options.dup
 
       RemoteSyslogLogger::UdpSender.should_receive(:new)
@@ -53,7 +53,7 @@ describe Log4r::RemoteSyslogOutputter do
     let(:udp_sender) { stub }
     let(:data) { stub }
 
-    subject { Log4r::RemoteSyslogOutputter.new(name, 'url' => url) }
+    subject { Log4r::RemoteSyslogOutputter.new(name, :url => url) }
 
     it 'should delegate to udp_sender#write' do
       RemoteSyslogLogger::UdpSender.stub!(:new).and_return(udp_sender)
