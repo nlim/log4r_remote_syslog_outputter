@@ -20,7 +20,7 @@ describe Log4r::RemoteSyslogOutputter do
       subject.new(name, :url => url)
     end
 
-    it "should not pass along :level and :formatter, and 'url' to RemoteSyslogLogger::UdpSender's constructor" do
+    it "should not pass along :level, :formatter, :url  to RemoteSyslogLogger::UdpSender's constructor" do
       RemoteSyslogLogger::UdpSender
         .should_receive(:new)
         .with(host, port, :key => 'value')

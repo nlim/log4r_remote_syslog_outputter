@@ -1,0 +1,19 @@
+= Log4r Remote Syslog Outputter
+
+== About
+== Getting Started
+
+=== Instantiating Outputters
+
+=== Using Configuration Files
+
+==== YAML
+
+==== XML
+
+== Contribute
+
+=== Cloning
+
+=== Running Tests
+  

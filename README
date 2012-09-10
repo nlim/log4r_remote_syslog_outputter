@@ -1,4 +1,0 @@
-A Log4r outputter that delegates to Papertrail's remote syslog logger.
-
-See lib/log4r_remote_syslog_outputter/log4r/outputters/remote_syslog_outputter.rb
-for usage information, it's self-explanatory.
