@@ -2,11 +2,11 @@
 
 == About
 
-  This is the fork and update of the repo: https://github.com/ohwillie/log4r_remote_syslog_outputter, which allows Log4r to output to a remote syslog server.
-  Papertrail has a gem: https://github.com/papertrail/remote_syslog_logger, which defines a class RemoteSyslogLogger::UdpSender which can act as a LogDevice class,
-  implementing the methods: write, and close.  This allows you do instantiate a Ruby Logger class using this LogDevice duck-type.  This gem uses the
-  RemoteSyslogLogger::UdpSender to make a functioning outputter for Log4r, which can be added to outputters of a Log4r::Logger instance.  The class name of this outputter
-  is Log4r::RemoteSyslogOutputter.  I have altered the gem to enable XML and YAML configurators to instantiate this new type of outputter.
+This is the fork and update of the repo: https://github.com/ohwillie/log4r_remote_syslog_outputter, which allows Log4r to output to a remote syslog server.
+Papertrail has a gem: https://github.com/papertrail/remote_syslog_logger, which defines a class RemoteSyslogLogger::UdpSender which can act as a LogDevice class,
+implementing the methods: write, and close.  This allows you do instantiate a Ruby Logger class using this LogDevice duck-type.  This gem uses the
+RemoteSyslogLogger::UdpSender to make a functioning outputter for Log4r, which can be added to outputters of a Log4r::Logger instance.  The class name of this outputter
+is Log4r::RemoteSyslogOutputter.  I have altered the gem to enable XML and YAML configurators to instantiate this new type of outputter.
 
 == Getting Started
 
@@ -39,48 +39,46 @@
 1. With the following example file, you can call Log4r::YamlConfigurator.decode_yaml(YAML.load_file('config.yml')), and you get all of your defined
    Loggers and Outputters created.
 
-logger_defaults: &logger_defaults
-  level: ALL
-  trace: true
-  additive: false
-  outputters:
-    - papertrail
+    logger_defaults: &logger_defaults
+      level: ALL
+      trace: true
+      additive: false
+      outputters:
+      - papertrail
 
-loggers:
-  - name: logger_one
-    <<: *logger_defaults
+    loggers:
+    - name: logger_one
+      <<: *logger_defaults
+    - name: logger_two
+        <<: *logger_defaults
 
-  - name: logger_two
-    <<: *logger_defaults
-
-outputters:
-  - type: RemoteSyslogOutputter
-    name: papertrail
-    level: ALL
-    url: syslog://logs.papertrailapp.com:{PORT}
-    program: My_Awesome_Program
-    formatter:
-      pattern     : '%c %l: %m'
-      type        : PatternFormatter
-
+    outputters:
+    - type: RemoteSyslogOutputter
+      name: papertrail
+      level: ALL
+      url: syslog://logs.papertrailapp.com:{PORT}
+      program: My_Awesome_Program
+      formatter:
+        pattern     : '%c %l: %m'
+        type        : PatternFormatter
 
 ==== XML
 
 1. With the following example file, you can call Log4r::Configurator.load_xml_file('config.xml'), and create all
    of your defined loggers and outputters. (Look out: all definitions must be within the log4r_config document element)
 
-<log4r_config>
-    <!-- Outputters -->
-    <outputter name="remote_syslog_outputter" type="RemoteSyslogOutputter" level="ALL" url="http://localhost:3203" program="my_program">
+    <log4r_config>
+      <!-- Outputters -->
+      <outputter name="remote_syslog_outputter" type="RemoteSyslogOutputter" level="ALL" url="http://localhost:3203" program="my_program">
         <formatter type="Log4r::PatternFormatter">
-            <pattern>=>[%5l %d] %C: %M [%t]</pattern>
+          <pattern>=>[%5l %d] %C: %M [%t]</pattern>
         </formatter>
-    </outputter>
-    <!-- Loggers -->
-    <logger name="my_awesome_logger" level="ALL" additive="false" trace="true">
+      </outputter>
+      <!-- Loggers -->
+      <logger name="my_awesome_logger" level="ALL" additive="false" trace="true">
         <outputter>remote_syslog_outputter</outputter>
-    </logger>
-</log4r_config>
+      </logger>
+    </log4r_config>
 
 == Contribute
 
