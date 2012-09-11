@@ -50,7 +50,7 @@ is Log4r::RemoteSyslogOutputter.  I have altered the gem to enable XML and YAML 
     - name: logger_one
       <<: *logger_defaults
     - name: logger_two
-        <<: *logger_defaults
+      <<: *logger_defaults
 
     outputters:
     - type: RemoteSyslogOutputter
