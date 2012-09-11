@@ -12,7 +12,7 @@ is Log4r::RemoteSyslogOutputter.  I have altered the gem to enable XML and YAML 
 
 1. Add this line to your Gemfile
 
-    https://github.com/papertrail/remote_syslog_logger
+    gem 'log4r_remote_syslog_outputter', :git => "git@github.com:nlim/log4r_remote_syslog_outputter.git"
 
 2. Bundle
 
@@ -94,7 +94,7 @@ is Log4r::RemoteSyslogOutputter.  I have altered the gem to enable XML and YAML 
 
 3. When they pass, commit them then push to your Github repo
    
-    git push origin your-fix-branche-name
+    git push origin your-fix-branch-name
 
 4. Submit a pull request on Github
         
